@@ -39,11 +39,12 @@ export async function session(
 
       if (!payload) throw new Error("Invalid JWT")
 
-      // @ts-expect-error
       const token = await callbacks.jwt({
         token: payload,
         ...(isUpdate && { trigger: "update" }),
         session: newSession,
+        // @ts-expect-error
+        cookies,
       })
 
       const newExpires = fromDate(sessionMaxAge)
